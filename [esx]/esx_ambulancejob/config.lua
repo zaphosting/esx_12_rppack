@@ -6,21 +6,21 @@ Config.Marker                     = {type = 1, x = 1.5, y = 1.5, z = 0.5, r = 10
 
 Config.ReviveReward               = 700  -- Revive reward, set to 0 if you don't want it enabled
 Config.AntiCombatLog              = true -- Enable anti-combat logging? (Removes Items when a player logs back after intentionally logging out while dead.)
-Config.LoadIpl                    = true -- Disable if you're using fivem-ipl or other IPL loaders
+Config.LoadIpl                    = false -- Disable if you're using fivem-ipl or other IPL loaders
 
 Config.Locale                     = 'en'
 
 Config.EarlyRespawnTimer          = 60000 * 1  -- time til respawn is available
 Config.BleedoutTimer              = 60000 * 10 -- time til the player bleeds out
 
-Config.EnablePlayerManagement     = false -- Enable society managing (If you are using esx_society).
+Config.EnablePlayerManagement     = true -- Enable society managing (If you are using esx_society).
 
 Config.RemoveWeaponsAfterRPDeath  = true
 Config.RemoveCashAfterRPDeath     = true
 Config.RemoveItemsAfterRPDeath    = true
 
 -- Let the player pay for respawning early, only if he can afford it.
-Config.EarlyRespawnFine           = false
+Config.EarlyRespawnFine           = true
 Config.EarlyRespawnFineAmount     = 5000
 
 Config.RespawnPoint = {coords = vector3(341.0, -1397.3, 32.5), heading = 48.5}
