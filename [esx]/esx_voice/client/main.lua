@@ -67,10 +67,12 @@ Citizen.CreateThread(function()
 			voice.level = _U('whisper')
 		end
 
+		--[[
 		if NetworkIsPlayerTalking(PlayerId()) then
 			drawLevel(41, 128, 185, 255)
 		elseif not NetworkIsPlayerTalking(PlayerId()) then
 			drawLevel(185, 185, 185, 255)
 		end
+		--]]
 	end
 end)
