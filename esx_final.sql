@@ -562,6 +562,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_property` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `skin` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jail` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`identifier`),
   UNIQUE KEY `index_users_phone_number` (`phone_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
