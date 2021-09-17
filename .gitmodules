@@ -1,3 +1,6 @@
 [submodule "[esx]"]
 	path = [esx]
 	url = https://github.com/zap-fivem/esx_12
+[submodule "EasyAdmin"]
+	path = EasyAdmin
+	url = https://github.com/Blumlaut/EasyAdmin
