@@ -540,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `society_moneywash` (
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `identifier` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `identifier` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `accounts` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `group` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT 'user',
