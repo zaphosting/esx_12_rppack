@@ -1,0 +1,3 @@
+[submodule "[esx]"]
+	path = [esx]
+	url = https://github.com/zap-fivem/esx_12
