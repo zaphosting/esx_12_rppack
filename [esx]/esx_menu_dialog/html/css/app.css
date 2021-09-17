@@ -1,17 +1,9 @@
-@font-face {
-	font-family: bankgothic;
-	src: url('../fonts/bankgothic.ttf');
-}
-
-@font-face {
-	font-family: pcdown;
-	src: url('../fonts/pdown.ttf');
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
 
 #controls {
-	font-family: 'IBM Plex Sans', sans-serif;
-	font-size: 5em;
-	color: #FFF;
+	font-family: 'Poppins', sans-serif;
+	color: #fff;
 	position: absolute;
 	bottom: 40;
 	right: 40;
@@ -22,16 +14,26 @@
 }
 
 .dialog {
-	font-family: 'PT Sans Narrow', sans-serif;
-	background-color: rgba(40, 40, 40, 1);
-	color: #fff;
+	font-family: 'Poppins', sans-serif;
+  background: white;
+  color: rgba(0, 0, 0, 1);
 	position: absolute;
 	overflow: hidden;
 	top: 50%;
 	left: 50%;
-	width: 640px;
-	height: 124px;
+	width: 400px;
+	height: 113px;
 	transform: translate(-50%, -50%);
+  border-radius: 10px;
+  border-bottom: 4px solid rgba(0, 140, 212, 1);
+  border-top: 4px solid rgba(0, 140, 212, 1);
+  animation: fadeIn 1.1s;
+}
+
+.head {
+	display: flex;
+	flex-basis: 100%;
+	align-items: center;
 }
 
 .dialog.big {
@@ -39,13 +41,12 @@
 }
 
 .dialog .head {
-	background-color: #4682B4;
+	background-color: #27272d;
 	text-align: center;
 	height: 40px;
-	font-size: 22px;
 }
 
-.dialog .head span:before {
+.dialog .head span::before {
 	content: "";
 	display: inline-block;
 	height: 100%;
@@ -53,39 +54,112 @@
 }
 
 .dialog input[type="text"] {
-	width: 100%;
-	height: 42px;
-	color: #fff;
-	font-size: 20px;
-	background-color: rgba(20, 20, 20, 1);
-	border-bottom: 2px solid 	#e76767;
+	width: 70%;
+	height: 32px;
+  outline: 0;
+  background: white;
+  text-align: center;
+  margin-top: 17.5px;
+  margin-left: 58px;
+  color: white;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 1.2px solid rgba(0, 0, 0, 1);
+  font-size: 11px;
+  font-style: italic;
+  color: black;
+}
+
+.dialog input[type="text"]:active, .dialog input[type="text"]:hover {
+  color: grey;
+  border-bottom: 1.5px solid grey;
+  font-size: 10px;
 }
 
 .dialog textarea {
 	width: 100%;
-	height: 138px;
-	color: #fff;
-	font-size: 20px;
-	background-color: rgba(20, 20, 20, 1);
-	border-bottom: 2px solid 	#e76767;
+	height: 128px;
+}
+
+.dialog button {
+	font-family: 'Comfortaa', cursive;
+	margin-top: 17px;
+	border: 0;
+	height: 29px;
+	color: black;
+	font-weight: 600;
+	width: 20%;
+	border-radius: 3px;
+	outline: 0;
 }
 
 .dialog button[name="submit"] {
-	width: 75%;
-	color: #fff;
-	height: 42px;
-	font-size: 22px;
-	border: 0px solid 	#e76767;
-	border-right: 1px solid 	#e76767;
-	background-color: rgba(40, 40, 40, 1)
+  margin-left: 105px;
+  background-color: rgba(71, 255, 84, 0.8);
 }
 
 .dialog button[name="cancel"] {
-	width: 25%;
-	color: rgb(236, 75, 75);
-	height: 42px;
-	font-size: 20px;
-	border: 0px solid 	#e76767;
-	border-left: 1px solid 	#e76767;
-	background-color: rgba(40, 40, 40, 1)
+ 	margin-left: 30px; 
+  background-color: rgba(255, 74, 71, 0.8);
+}
+
+.dialog button[name="cancel"]:hover {
+  animation: pulse_red 1s infinite;
+  border-radius: 8px;
+  background-color: rgba(255, 74, 71, 0.6);
+}
+
+.dialog button[name="submit"]:hover {
+  animation: pulse_green 1s infinite;
+  border-radius: 8px;
+  background-color: rgba(71, 255, 84, 0.6);
+}
+
+.head::before,
+.head::after {
+	content: "";
+	flex-grow: 1;
+	background: #00e1ff;
+	height: 2px;
+	margin: 0px 3px;
+}
+
+@keyframes pulse_green {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(71, 255, 84, 0.8);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+@keyframes pulse_red {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(255, 74, 71, 0.8);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }

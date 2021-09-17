@@ -2,9 +2,9 @@ fx_version 'adamant'
 
 game 'gta5'
 
-description 'ESX Menu List'
+description 'REDESIGN V2 by Re1ease#0001'
 
-version 'legacy'
+version '1.0.2'
 
 client_scripts {
 	'@es_extended/client/wrapper.lua',

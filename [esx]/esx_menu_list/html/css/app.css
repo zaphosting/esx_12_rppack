@@ -1,52 +1,95 @@
-@font-face {
-	font-family: bankgothic;
-	src: url('../fonts/bankgothic.ttf');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+::-webkit-scrollbar {
+  width: 5px;
 }
 
-@font-face {
-	font-family: pcdown;
-	src: url('../fonts/pdown.ttf');
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px black; 
+  border-radius: 5px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #008cd4; 
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fff; 
 }
 
 .menu {
-	font-family: bankgothic;
+	font-family: 'Poppins', sans-serif;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	box-shadow: 0px 0px 50px 0px #000;
 	overflow-y: auto;
 	max-height: 90%;
+	border-radius: 7px;
 }
 
 .menu button {
-	font-family: bankgothic;
+	font-family: 'Poppins', sans-serif;
+	border-radius: 3px;
+	border-style: solid;
+	border-width: 0px;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
+	font-size: 12px;
+	background: #008cd4;
+	color: white;
+	animation: moveInBottom 1s ease-in-out;
+        animation-fill-mode: forwards;
+}
+
+.menu button:hover {
+	color: black !important;
+	border-radius: 50px;
+	background: white;
+	transition: all 0.3s ease 0s;
 }
 
 .menu>table {
 	border: 1px transparent;
 	border-spacing: 0;
 	min-width: 400px;
-	background-color: #FFF;
+	background: rgba(255, 255, 255, 1);
 }
 
 .menu>table>thead {
-	background-color: #506be6;
-	text-align: center;
+	background-color: rgba(0, 140, 212, 1);
+	text-align: left;
 	height: 40px;
 	line-height: 40px;
 	color: #fff;
+	font-size: 16px;
+	font-family: 'Comfortaa', cursive;
 }
 
 .menu td {
-	text-align: center;
+	text-align: left;
 	padding: 8px;
 }
 
 .menu tbody tr:nth-child(even) {
-	background: #CCC
+	background: rgba(240, 240, 240, 1);
+	font-size: 13px;
 }
 
 .menu tbody tr:nth-child(odd) {
-	background: #FFF
+	background: rgba(255, 255, 255, 1);
+	font-size: 13px;
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }

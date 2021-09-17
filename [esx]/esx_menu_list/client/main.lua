@@ -1,5 +1,13 @@
+ESX = nil
+local soundOn = true
+
 Citizen.CreateThread(function()
-	local ESX = exports['es_extended']:getSharedObject()
+
+	while ESX == nil do
+		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+		Citizen.Wait(0)
+	end
+
 	local MenuType    = 'list'
 	local OpenedMenus = {}
 
@@ -51,6 +59,9 @@ Citizen.CreateThread(function()
 
 		if menu.submit ~= nil then
 			menu.submit(data, menu)
+			if soundOn == true then
+			PlaySound(0, "Menu_Accept", "Phone_SoundSet_Default", 0, 0, 1);
+			end
 		end
 
 		cb('OK')
@@ -61,6 +72,9 @@ Citizen.CreateThread(function()
 
 		if menu.cancel ~= nil then
 			menu.cancel(data, menu)
+			if soundOn == true then
+			PlaySound(0, "Click_Fail", "WEB_NAVIGATION_SOUNDS_PHONE", 0, 0, 1);			
+			end
 		end
 
 		cb('OK')

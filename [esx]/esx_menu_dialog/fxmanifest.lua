@@ -2,14 +2,9 @@ fx_version 'adamant'
 
 game 'gta5'
 
-description 'ESX Menu Dialog'
+description 'REDESIGN V2 by Re1ease#0001'
 
-version 'legacy'
-
-client_scripts {
-	'@es_extended/client/wrapper.lua',
-	'client/main.lua'
-}
+client_script 'client/main.lua'
 
 ui_page 'html/ui.html'
 
@@ -26,3 +21,5 @@ files {
 }
 
 dependency 'es_extended'
+
+
