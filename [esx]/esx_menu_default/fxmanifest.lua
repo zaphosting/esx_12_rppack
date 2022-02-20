@@ -2,10 +2,12 @@ fx_version 'adamant'
 
 game 'gta5'
 
-description 'ESX Menu Default Redesign v2 by Re1ease#0001'
+description 'ESX Menu Default'
+
+version '1.5.0'
 
 client_scripts {
-	'@es_extended/client/wrapper.lua',
+	'@es_extended/imports.lua',
 	'client/main.lua'
 }
 
@@ -17,9 +19,7 @@ files {
 	'html/ui.html',
 	'html/css/app.css',
 	'html/js/mustache.min.js',
-	'html/js/app.js',
-	'html/fonts/pdown.ttf',
-	'html/fonts/bankgothic.ttf'
+	'html/js/app.js'
 }
 
 dependencies {

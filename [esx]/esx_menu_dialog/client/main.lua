@@ -1,145 +1,101 @@
-Citizen.CreateThread(function()
-	-- internal variables
-	ESX               = nil
-	local Timeouts    = {}
-	local GUI         = {}
-	GUI.Time          = 0
-	local MenuType    = 'dialog'
-	local OpenedMenus = {}
-	local soundOn = true
+local Timeouts, OpenedMenus, MenuType = {}, {}, 'dialog'
 
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
+local function openMenu(namespace, name, data)
+	for i=1, #Timeouts, 1 do
+		ESX.ClearTimeout(Timeouts[i])
 	end
 
-	local openMenu = function(namespace, name, data)
-		for i=1, #Timeouts, 1 do
-			ESX.ClearTimeout(Timeouts[i])
-		end
+	OpenedMenus[namespace .. '_' .. name] = true
 
-		OpenedMenus[namespace .. '_' .. name] = true
+	SendNUIMessage({
+		action = 'openMenu',
+		namespace = namespace,
+		name = name,
+		data = data
+	})
 
-		SendNUIMessage({
-			action    = 'openMenu',
-			namespace = namespace,
-			name      = name,
-			data      = data
-		})
+	local timeoutId = ESX.SetTimeout(200, function()
+		SetNuiFocus(true, true)
+	end)
 
-		local timeoutId = ESX.SetTimeout(200, function()
-			SetNuiFocus(true, true)
-		end)
+	table.insert(Timeouts, timeoutId)
+end
 
-		table.insert(Timeouts, timeoutId)
+local function closeMenu(namespace, name)
+	OpenedMenus[namespace .. '_' .. name] = nil
+
+	SendNUIMessage({
+		action = 'closeMenu',
+		namespace = namespace,
+		name = name,
+	})
+
+	if ESX.Table.SizeOf(OpenedMenus) == 0 then
+		SetNuiFocus(false)
 	end
 
-	local closeMenu = function(namespace, name)
-		OpenedMenus[namespace .. '_' .. name] = nil
-		local OpenedMenuCount                 = 0
+end
 
-		SendNUIMessage({
-			action    = 'closeMenu',
-			namespace = namespace,
-			name      = name,
-			data      = data
-		})
+ESX.UI.Menu.RegisterType(MenuType, openMenu, closeMenu)
 
-		for k,v in pairs(OpenedMenus) do
-			if v == true then
-				OpenedMenuCount = OpenedMenuCount + 1
+AddEventHandler('esx_menu_dialog:message:menu_submit', function(data)
+	local menu = ESX.UI.Menu.GetOpened(MenuType, data._namespace, data._name)
+	local cancel = false
+
+	if menu.submit then
+		-- is the submitted data a number?
+		if tonumber(data.value) then
+			data.value = ESX.Math.Round(tonumber(data.value))
+
+			-- check for negative value
+			if tonumber(data.value) <= 0 then
+				cancel = true
 			end
 		end
 
-		if OpenedMenuCount == 0 then
-			SetNuiFocus(false)
-		end
+		data.value = ESX.Math.Trim(data.value)
 
+		-- don't submit if the value is negative or if it's 0
+		if cancel then
+			ESX.ShowNotification('That input is not allowed!')
+		else
+			menu.submit(data, menu)
+		end
 	end
+end)
 
-	ESX.UI.Menu.RegisterType(MenuType, openMenu, closeMenu)
+AddEventHandler('esx_menu_dialog:message:menu_cancel', function(data)
+	local menu = ESX.UI.Menu.GetOpened(MenuType, data._namespace, data._name)
 
-	RegisterNUICallback('menu_submit', function(data, cb)
-		local menu = ESX.UI.Menu.GetOpened(MenuType, data._namespace, data._name)
-		local post = true
+	if menu.cancel ~= nil then
+		menu.cancel(data, menu)
+	end
+end)
 
-		if menu.submit ~= nil then
+AddEventHandler('esx_menu_dialog:message:menu_change', function(data)
+	local menu = ESX.UI.Menu.GetOpened(MenuType, data._namespace, data._name)
 
-			-- Is the submitted data a number?
-			if tonumber(data.value) ~= nil then
+	if menu.change ~= nil then
+		menu.change(data, menu)
+	end
+end)
 
-				-- Round float values
-				data.value = ESX.Math.Round(tonumber(data.value))
+CreateThread(function()
+	while true do
+		Wait(0)
 
-				-- Check for negative value
-				if tonumber(data.value) <= 0 then
-					post = false
-				end
-			end
-
-			data.value = ESX.Math.Trim(data.value)
-
-			-- Don't post if the value is negative or if it's 0
-			if post then
-				menu.submit(data, menu)
-				if soundOn == true then
-					PlaySound(0, "Menu_Accept", "Phone_SoundSet_Default", 0, 0, 1);
-				end
-			else
-				ESX.ShowNotification('That input is invalid!')
-			end
+		if ESX.Table.SizeOf(OpenedMenus) > 0 then
+			DisableControlAction(0, 1,   true) -- LookLeftRight
+			DisableControlAction(0, 2,   true) -- LookUpDown
+			DisableControlAction(0, 142, true) -- MeleeAttackAlternate
+			DisableControlAction(0, 106, true) -- VehicleMouseControlOverride
+			DisableControlAction(0, 12, true) -- WeaponWheelUpDown
+			DisableControlAction(0, 14, true) -- WeaponWheelNext
+			DisableControlAction(0, 15, true) -- WeaponWheelPrev
+			DisableControlAction(0, 16, true) -- SelectNextWeapon
+			DisableControlAction(0, 17, true) -- SelectPrevWeapon
+		else
+			Wait(500)
 		end
-
-		cb('OK')
-	end)
-
-	RegisterNUICallback('menu_cancel', function(data, cb)
-		local menu = ESX.UI.Menu.GetOpened(MenuType, data._namespace, data._name)
-
-		if menu.cancel ~= nil then
-			menu.cancel(data, menu)
-			if soundOn == true then
-				PlaySound(0, "Click_Fail", "WEB_NAVIGATION_SOUNDS_PHONE", 0, 0, 1);			
-			end
-		end
-
-		cb('OK')
-	end)
-
-	RegisterNUICallback('menu_change', function(data, cb)
-		local menu = ESX.UI.Menu.GetOpened(MenuType, data._namespace, data._name)
-
-		if menu.change ~= nil then
-			menu.change(data, menu)
-		end
-
-		cb('OK')
-	end)
-
-	Citizen.CreateThread(function()
-		while true do
-			Citizen.Wait(10)
-			local OpenedMenuCount = 0
-
-			for k,v in pairs(OpenedMenus) do
-				if v == true then
-					OpenedMenuCount = OpenedMenuCount + 1
-				end
-			end
-
-			if OpenedMenuCount > 0 then
-				DisableControlAction(0, 1,   true) -- LookLeftRight
-				DisableControlAction(0, 2,   true) -- LookUpDown
-				DisableControlAction(0, 142, true) -- MeleeAttackAlternate
-				DisableControlAction(0, 106, true) -- VehicleMouseControlOverride
-				DisableControlAction(0, 12, true) -- WeaponWheelUpDown
-				DisableControlAction(0, 14, true) -- WeaponWheelNext
-				DisableControlAction(0, 15, true) -- WeaponWheelPrev
-				DisableControlAction(0, 16, true) -- SelectNextWeapon
-				DisableControlAction(0, 17, true) -- SelectPrevWeapon
-			else
-				Citizen.Wait(500)
-			end
-		end
-	end)
+	end
 end)

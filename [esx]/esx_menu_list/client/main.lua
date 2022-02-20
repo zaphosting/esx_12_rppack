@@ -1,17 +1,8 @@
-ESX = nil
-local soundOn = true
-
-Citizen.CreateThread(function()
-
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
-	end
-
+CreateThread(function()
 	local MenuType    = 'list'
 	local OpenedMenus = {}
 
-	local openMenu = function(namespace, name, data)
+	local function openMenu(namespace, name, data)
 
 		OpenedMenus[namespace .. '_' .. name] = true
 
@@ -28,7 +19,7 @@ Citizen.CreateThread(function()
 
 	end
 
-	local closeMenu = function(namespace, name)
+	local function closeMenu(namespace, name)
 
 		OpenedMenus[namespace .. '_' .. name] = nil
 		local OpenedMenuCount = 0
@@ -37,7 +28,6 @@ Citizen.CreateThread(function()
 			action    = 'closeMenu',
 			namespace = namespace,
 			name      = name,
-			data      = data
 		})
 
 		for k,v in pairs(OpenedMenus) do
@@ -59,9 +49,6 @@ Citizen.CreateThread(function()
 
 		if menu.submit ~= nil then
 			menu.submit(data, menu)
-			if soundOn == true then
-			PlaySound(0, "Menu_Accept", "Phone_SoundSet_Default", 0, 0, 1);
-			end
 		end
 
 		cb('OK')
@@ -72,9 +59,6 @@ Citizen.CreateThread(function()
 
 		if menu.cancel ~= nil then
 			menu.cancel(data, menu)
-			if soundOn == true then
-			PlaySound(0, "Click_Fail", "WEB_NAVIGATION_SOUNDS_PHONE", 0, 0, 1);			
-			end
 		end
 
 		cb('OK')

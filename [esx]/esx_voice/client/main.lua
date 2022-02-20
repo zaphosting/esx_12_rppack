@@ -41,9 +41,9 @@ AddEventHandler('esx:onPlayerSpawn', function()
 	NetworkSetTalkerProximity(voice.default)		
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
 	while true do
-		Citizen.Wait(1)
+		Wait(0)
 
 		if IsControlJustPressed(1, Keys['H']) and IsControlPressed(1, Keys['LEFTSHIFT']) then
 			voice.current = (voice.current + 1) % 3
@@ -67,12 +67,10 @@ Citizen.CreateThread(function()
 			voice.level = _U('whisper')
 		end
 
-		--[[
 		if NetworkIsPlayerTalking(PlayerId()) then
 			drawLevel(41, 128, 185, 255)
 		elseif not NetworkIsPlayerTalking(PlayerId()) then
 			drawLevel(185, 185, 185, 255)
 		end
-		--]]
 	end
 end)
