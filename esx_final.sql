@@ -16,6 +16,13 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `multicharacter_slots` (
+	`identifier` VARCHAR(60) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`slots` INT(11) NOT NULL,
+	PRIMARY KEY (`identifier`) USING BTREE,
+	INDEX `slots` (`slots`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `addon_account`;
 CREATE TABLE IF NOT EXISTS `addon_account` (
   `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -563,6 +570,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `skin` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `jail` INT(11) NOT NULL DEFAULT '0',
+  `disabled` TINYINT(1) NULL DEFAULT '0',
   PRIMARY KEY (`identifier`),
   UNIQUE KEY `index_users_phone_number` (`phone_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
