@@ -1,4 +1,4 @@
-
+USE `es_extended`;
 
 INSERT INTO `addon_account` (name, label, shared) VALUES
 	('society_police', 'Poliisi', 1)
@@ -31,7 +31,8 @@ CREATE TABLE `fine_types` (
 	`category` int DEFAULT NULL,
 
 	PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 INSERT INTO `fine_types` (label, amount, category) VALUES
 	('Äänimerkin väärinkäyttö', 30, 0),

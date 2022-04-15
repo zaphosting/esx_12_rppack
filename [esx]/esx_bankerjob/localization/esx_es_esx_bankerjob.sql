@@ -1,3 +1,5 @@
+USE `essentialmode`;
+
 INSERT INTO `addon_account` (name, label, shared) VALUES
 	('society_banker','Bank',1),
 	('bank_savings','Ahorro bancario',0)

@@ -1,4 +1,4 @@
-
+USE `es_extended`;
 
 CREATE TABLE `user_parkings` (
   
@@ -9,4 +9,5 @@ CREATE TABLE `user_parkings` (
   `vehicle` longtext,
 
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
