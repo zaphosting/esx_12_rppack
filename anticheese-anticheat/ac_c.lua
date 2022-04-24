@@ -60,17 +60,22 @@ Citizen.CreateThread(function()
 		if NetworkIsInSpectatorMode() then
 			TriggerServerEvent("AntiCheese:Spectate")
 		end
-
+		
 		if GetPlayerWeaponDamageModifier(PlayerId()) > 1.0 then
 			TriggerServerEvent("AntiCheese:Damage")
 		end
-
+		
 		if GetUsingseethrough() then
 			TriggerServerEvent("AntiCheese:Thermal")
 		end
-
+		
 		if GetUsingnightvision() then
 			TriggerServerEvent("AntiCheese:Night")
+		end
+		
+		local playerPed = PlayerPedId()
+		if IsPedSittingInAnyVehicle(playerPed) and IsVehicleVisible(GetVehiclePedIsIn(playerPed, false)) then
+			TriggerServerEvent("AntiCheese:CarVisible")
 		end
 	end
 end)
@@ -78,13 +83,6 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(30000)
-		for _,theWeapon in ipairs(BlacklistedWeapons) do
-			Citizen.Wait(1)
-			if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
-				TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
-				break
-			end
-		end
 		local DetectableTextures = {
 			{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
 			{txd = "John", txt = "John2", name = "SugarMenu"},
@@ -93,12 +91,13 @@ Citizen.CreateThread(function()
 			{txd = "dopatest", txt = "duiTex", name = "Copypaste Menu"},
 			{txd = "fm", txt = "menu_bg", name = "Fallout"},
 			{txd = "wave", txt = "logo", name ="Wave"},
+			{txd = "wave1", txt = "logo1", name = "Wave (alt.)"},
 			{txd = "meow2", txt = "woof2", name ="Alokas66", x = 1000, y = 1000},
 			{txd = "adb831a7fdd83d_Guest_d1e2a309ce7591dff86", txt = "adb831a7fdd83d_Guest_d1e2a309ce7591dff8Header6", name ="Guest Menu"},
 			{txd = "hugev_gif_DSGUHSDGISDG", txt = "duiTex_DSIOGJSDG", name="HugeV Menu"},
 			{txd = "MM", txt = "menu_bg", name="MetrixFallout"},
 			{txd = "wm", txt = "wm2", name="WM Menu"}
-
+			
 		}
 		
 		for i, data in pairs(DetectableTextures) do
@@ -192,20 +191,26 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(500)
-		if IsPedInAnyVehicle(PlayerPedId()) then
-			v = GetVehiclePedIsIn(playerPed, false)
-		end
 		local playerPed = PlayerPedId()
-		
-		if playerPed and v then
-			if GetPedInVehicleSeat(v, -1) == playerPed then
-				local car = GetVehiclePedIsIn(playerPed, false)
-				carModel = GetEntityModel(car)
-				carName = GetDisplayNameFromVehicleModel(carModel)
+		if IsPedInAnyVehicle(playerPed) then
+			local vehicle = GetVehiclePedIsIn(playerPed, false)
+			
+			if GetPedInVehicleSeat(vehicle, -1) == playerPed then
+				local carModel = GetEntityModel(vehicle)
+				local carName = GetDisplayNameFromVehicleModel(carModel)
+				local carLabel = GetLabelText(carName)
 				if isCarBlacklisted(carModel) then
-					DeleteVehicle(car)
-					TriggerServerEvent('AntiCheese:CarFlag', carModel)
+					DeleteVehicle(vehicle)
+					TriggerServerEvent('AntiCheese:CarFlag', carLabel)
 				end
+			end
+		end
+		for _,theWeapon in ipairs(BlacklistedWeapons) do
+			Citizen.Wait(1)
+			if HasPedGotWeapon(playerPed,theWeapon,false) == 1 then
+				TriggerServerEvent("AntiCheese:WeaponFlag", theWeapon)
+				RemoveWeaponFromPed(playerPed, theWeapon)
+				break
 			end
 		end
 	end

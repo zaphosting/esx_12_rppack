@@ -1,4 +1,4 @@
 {
-    "version":"0.90",
-    "changelog":"More Mod Menu detections, proper config file, lots of improvements"
+    "version":"0.92",
+    "changelog":"detect if base resources are infected with malware"
 }

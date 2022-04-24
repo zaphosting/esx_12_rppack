@@ -1,19 +1,19 @@
 -- configure active components here (for now)
 Components = {
-
+	
 	-- these MIGHT trigger in legitimate circumstances, beware before enabling
 	["client.godmode"] = false, -- protect against force-setting health and SetEntityInvincible
 	["client.speedhack"] = false, -- Protect against Cheat Engine Speedhack
 	["client.superjump"] = false, -- protect against super jump cheats
 	["client.weaponblacklist"] = false, -- blacklist certain weapons in ac_c.lua
 	["client.carblacklist"] = false, -- blacklist certain cars in ac_c.lua
-	["client.night"] = false, -- anti night vision
-	["client.thermal"] = false, -- anti thermal vision
+	["client.carvisible"] = true, -- anti car invisibility
 	["client.multidamage"] = true, -- anti multi damage, blocks damage multiplication
-	["client.spectate"] = false, -- detects if cheater is spectating other players
+	["client.spectate"] = true, -- detects if cheater is spectating other players
 	["server.cleartask"] = true, -- detects clearing player tasks, e.g.kicking from car
+	["server.giveweapon"] = false, -- anti weapon giver (detects when player add weapon into other player inventory)
 	["server.explosions"] = true, -- detect abnormal explosion amount, against "blow up server" cheats
-
+	
 	-- these will NEVER trigger under legitimate circumstances
 	["generic"] = true, -- generic event detection for cheats exposing themselves on purpose
 	["client.duiblacklist"] = true, -- checks for certain runtime textures being created which are used in cheat menus
@@ -35,17 +35,19 @@ Components = {
 	["server.esx.policejob"] = true, -- detect a ton of exploits in esx_policejob (cuff,drag,putinvehicle,outvehicle..)
 	["server.interactionmenu"] = true, -- detect an exploit of SEM_InteractionMenu 
 	["server.vrp.runstring"] = true, -- detect and ban users using a Remote Code Execution function in vrp_basic_menu 
-
+	["client.night"] = true, -- anti night vision
+	["client.thermal"] = true, -- anti thermal vision
+	
 	["customflag"] = true, -- resources can trigger this one themselves if they detected something
-
-
-
+	
+	
+	
 	-- ONLY TOUCH THESE IF YOU KNOW WHAT YOU ARE DOING!!!!
 	["server.blockClientEntities"] = false, -- ONESYNC REQUIRED it blocks **ALL** Clientside Entities, including vehicles, from spawning, they NEED to be spawned serverside.
 	-- can either be false, "strict" (no traffic), "relaxed" (traffic will spawn, script spawning blocked) or "inactive" (normal behaviour, clients can spawn entities)
 	-- resource-created Vehicles & Entities WILL NOT SPAWN! this needs to be adjusted accordingly for all resources that do this
-
-
+	
+	
 	-- found an exploit we dont know yet? found a cheat we can take a look at? dont hesitate, help anticheese development.. TODAY!
 	-- discord.gg/GugyRU8
 }
@@ -177,7 +179,8 @@ maliciousMessages = {
 	"https://discord.gg/yJb3qKG",
 	"ZAPRASZAM NA KANAŁ THEULAN",
 	"https://discord.gg/BEcQrjC",
-	"RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+	"RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+	"lutfen bankana bak. Sana para gonderdik, bu parayi Alien Menu sayesinde yaptik"
 }
 
 -- events which can be used to jail everyone
@@ -258,5 +261,28 @@ spammedEvents = {
 	"AdminMenu:giveBank",
 	"AdminMenu:giveCash",
 	"esx-qalle-hunting:reward",
-	"esx-qalle-hunting:sell"
+	"esx-qalle-hunting:sell",
+	"esx_vangelico_robbery:gioielli1",
+	"lester:vendita",
+	"houseRobberies:giveMoney",
+	"lh-bankrobbery:server:recieveItem",
+	"esx_uber:pay",
+	"99kr-burglary:Add",
+	"99kr-shops:Cashier",
+	"esx-ecobottles:retrieveBottle",
+	"loffe_carthief:questFinished",
+	"loffe_fishing:caught",
+	"esx_loffe_fangelse:Pay",
+	"loffe_robbery:pickUp",
+	"hospital:client:Revive",
+	"cylex:startSellSarap",
+	"cylex:startTransformSarap",
+	"cylex:startHarvestSarap",
+	"cylex:startSellMelon",
+	"cylex:startTransformMelon",
+	"cylex:startHarvestMelon",
+	"sp_admin:menuv",
+	"sp_admin:giveCash",
+	"sp_admin:giveDirtyMoney",
+	"sp_admin:giveCash"
 }
